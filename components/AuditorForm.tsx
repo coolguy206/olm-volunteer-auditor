@@ -1,7 +1,7 @@
 // components/AuditorForm.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   RefreshCw,
   CheckCircle2,
@@ -19,6 +19,8 @@ export default function AuditorForm() {
     message: string;
   } | null>(null);
   const [noShows, setNoShows] = useState<any[]>([]);
+
+  const resultsSectionRef = useRef<HTMLDivElement>(null);
 
   const handleAudit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +42,13 @@ export default function AuditorForm() {
           message: `Audit Complete! Found ${data.noShows.length} No Shows! It has been Saved to the Google Spreadsheet.`,
         });
         setNoShows(data.noShows);
+
+        setTimeout(() => {
+          resultsSectionRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100); // 100ms macro-task delay gives DOM time to paint
       } else {
         setStatus({
           type: "error",
@@ -61,9 +70,7 @@ export default function AuditorForm() {
       <div className="flex items-center gap-3 mb-10">
         <FileSpreadsheet className="w-8 h-8 text-teal-400" />
         <div>
-          <h2 className="text-2xl font-bold text-white">
-            EVENT NO SHOWS
-          </h2>
+          <h2 className="text-2xl font-bold text-white">EVENT NO SHOWS</h2>
           <p className="text-sm text-gray-400 tracking-wider">
             Reconcile SignUpGenius slots against live check-in logs
           </p>
@@ -125,6 +132,7 @@ export default function AuditorForm() {
 
       {status && (
         <div
+          ref={resultsSectionRef}
           className={`mt-6 p-4 rounded-xl flex items-start gap-3 border ${
             status.type === "success"
               ? "bg-emerald-950/30 border-emerald-800 text-emerald-400"
@@ -136,14 +144,16 @@ export default function AuditorForm() {
           ) : (
             <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
           )}
-          <span className="text-lg font-medium tracking-wider">{status.message}</span>
+          <span className="text-lg font-medium tracking-wider">
+            {status.message}
+          </span>
         </div>
       )}
 
       {noShows.length > 0 && (
         <div className="mt-6 border-t border-gray-800 pt-6">
           <h3 className="text-lg font-semibold text-gray-300 mb-3 tracking-wider">
-            Identified ({noShows.length}) NO SHOWS 
+            Identified ({noShows.length}) NO SHOWS
           </h3>
           <div className="bg-gray-950 rounded-xl border border-gray-800 divide-y divide-gray-900">
             {/* Table-like Header row on screen for readability */}
