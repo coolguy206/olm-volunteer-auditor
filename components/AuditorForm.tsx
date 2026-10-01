@@ -80,7 +80,7 @@ export default function AuditorForm() {
             required
             value={sugEventId}
             onChange={(e) => setSugEventId(e.target.value)}
-            placeholder="e.g., 4829103"
+            placeholder="example: https://www.signupgenius.com/go/{eventId}/"
             className="w-full px-4 py-4 bg-gray-950 rounded-lg border border-gray-800 focus:border-teal-500 focus:outline-none text-white text-sm"
           />
         </div>
@@ -94,7 +94,7 @@ export default function AuditorForm() {
             required
             value={sourceSheetId}
             onChange={(e) => setSourceSheetId(e.target.value)}
-            placeholder="Pasted from spreadsheet URL string"
+            placeholder="example: https://docs.google.com/spreadsheets/d/{spreadsheetId}/"
             className="w-full px-4 py-4 bg-gray-950 rounded-lg border border-gray-800 focus:border-teal-500 focus:outline-none text-white text-sm"
           />
         </div>
@@ -108,7 +108,7 @@ export default function AuditorForm() {
             required
             value={destSheetId}
             onChange={(e) => setDestSheetId(e.target.value)}
-            placeholder="Target spreadsheet ID for output"
+            placeholder="example: https://docs.google.com/spreadsheets/d/{spreadsheetId}/"
             className="w-full px-4 py-4 bg-gray-950 rounded-lg border border-gray-800 focus:border-teal-500 focus:outline-none text-white text-sm"
           />
         </div>
